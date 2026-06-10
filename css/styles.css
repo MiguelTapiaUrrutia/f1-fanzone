@@ -66,6 +66,19 @@ a {
   --color-acento-tenue: #00c79a;
   --color-borde: #30363d;
 
+  /* Colores representativos de equipos 2026 */
+  --equipo-mercedes: #00d2be;
+  --equipo-ferrari: #e8002d;
+  --equipo-mclaren: #ff8000;
+  --equipo-redbull: #3671c6;
+  --equipo-racingbulls: #6692ff;
+  --equipo-alpine: #0093cc;
+  --equipo-williams: #64c4ff;
+  --equipo-haas: #b6babd;
+  --equipo-audi: #bb0a30;
+  --equipo-astonmartin: #229971;
+  --equipo-cadillac: #d4af37;
+
   /* Espaciado — escala 4/8/16/24/32/48/64px */
   --espacio-1: 0.25rem;
   --espacio-2: 0.5rem;
@@ -261,7 +274,9 @@ nav a:focus-visible {
 /* Secciones de contenido
    ========================================================================== */
 #campeonato,
-#calendario {
+#calendario,
+#escuderias,
+#historia {
   max-width: var(--ancho-contenido);
   margin-inline: auto;
   padding: var(--espacio-6) var(--espacio-4);
@@ -359,7 +374,8 @@ tbody tr:hover {
 
 /* Sección Calendario
    ========================================================================== */
-.grid-calendario {
+.grid-calendario,
+.grid-escuderias {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--espacio-4);
@@ -436,6 +452,133 @@ tbody tr:hover {
 .badge-sprint {
   color: var(--color-texto-secundario);
   border: 1px solid var(--color-borde);
+}
+
+/* Sección Escuderías
+   ========================================================================== */
+.escuderia {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  /* Franja superior con el color del equipo (cae al borde neutro si falta) */
+  border-top: 3px solid var(--color-equipo, var(--color-borde));
+  border-radius: var(--radio-m);
+  transition: transform var(--transicion-rapida);
+}
+
+.escuderia:hover {
+  transform: translateY(-2px);
+}
+
+.escuderia h3 {
+  font-size: 1.25rem;
+}
+
+.escuderia-pilotos {
+  font-weight: 600;
+}
+
+.escuderia-motor {
+  font-family: var(--fuente-mono);
+  font-size: 0.8125rem;
+  color: var(--color-texto-secundario);
+}
+
+.escuderia-dato {
+  margin-top: auto;
+  font-size: 0.9375rem;
+  color: var(--color-texto-secundario);
+}
+
+/* Color de franja por equipo */
+.equipo-mercedes    { --color-equipo: var(--equipo-mercedes); }
+.equipo-ferrari     { --color-equipo: var(--equipo-ferrari); }
+.equipo-mclaren     { --color-equipo: var(--equipo-mclaren); }
+.equipo-redbull     { --color-equipo: var(--equipo-redbull); }
+.equipo-racingbulls { --color-equipo: var(--equipo-racingbulls); }
+.equipo-alpine      { --color-equipo: var(--equipo-alpine); }
+.equipo-williams    { --color-equipo: var(--equipo-williams); }
+.equipo-haas        { --color-equipo: var(--equipo-haas); }
+.equipo-audi        { --color-equipo: var(--equipo-audi); }
+.equipo-astonmartin { --color-equipo: var(--equipo-astonmartin); }
+.equipo-cadillac    { --color-equipo: var(--equipo-cadillac); }
+
+/* Sección Historia — timeline vertical
+   ========================================================================== */
+
+/* Contenedor: columna de hitos; ancho acotado para lectura cómoda */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  max-width: 42rem;
+  margin-top: var(--espacio-5);
+  list-style: none;
+}
+
+/* Cada hito es una fila flex: el ::before (círculo) + el contenido */
+.hito {
+  position: relative; /* ancla para posicionar la línea conectora */
+  display: flex;
+  gap: var(--espacio-4);
+  padding-bottom: var(--espacio-6);
+}
+
+.hito:last-child {
+  padding-bottom: 0;
+}
+
+/* Marcador circular: pseudo-elemento que participa como primer item flex */
+.hito::before {
+  content: "";
+  flex-shrink: 0; /* el círculo nunca se aplasta */
+  width: 14px;
+  height: 14px;
+  margin-top: 0.4rem; /* alinea el círculo con la línea del año */
+  border-radius: 50%;
+  background-color: var(--color-acento);
+  box-shadow: 0 0 0 4px rgba(0, 229, 176, 0.15); /* halo tenue */
+}
+
+/* Línea conectora: del borde inferior del círculo al inicio del siguiente */
+.hito::after {
+  content: "";
+  position: absolute;
+  left: 6px; /* centrada respecto al círculo de 14px (centro en 7px, línea de 2px) */
+  top: calc(0.4rem + 14px + 4px); /* margen del círculo + diámetro + halo */
+  bottom: 0;
+  width: 2px;
+  background-color: var(--color-borde);
+}
+
+/* El último hito no conecta con nada */
+.hito:last-child::after {
+  display: none;
+}
+
+.hito-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+}
+
+.hito-anio {
+  font-family: var(--fuente-mono);
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--color-acento);
+}
+
+.hito h3 {
+  font-size: 1.125rem;
+}
+
+.hito p {
+  font-size: 0.9375rem;
+  color: var(--color-texto-secundario);
 }
 
 /* ≥768px: enlaces del nav visibles y más aire en el hero
