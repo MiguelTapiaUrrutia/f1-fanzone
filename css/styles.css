@@ -1,0 +1,79 @@
+/* ==========================================================================
+   F1 FanZone — base: reset, variables y tipografía (mobile-first)
+   ========================================================================== */
+
+/* Reset
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+ul[role="list"],
+ol[role="list"] {
+  list-style: none;
+}
+
+a {
+  color: inherit;
+}
+
+/* Variables
+   ========================================================================== */
+:root {
+  /* Colores — tema oscuro */
+  --color-fondo: #111418;
+  --color-superficie: #1a1f25;
+  --color-texto: #e8eaed;
+  --color-texto-secundario: #9aa0a6;
+  --color-acento: #e8eaed; /* pendiente: se definirá el acento definitivo */
+
+  /* Tipografía */
+  --fuente-base: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --texto-base: 1rem;
+  --interlineado-base: 1.6;
+}
+
+/* Tipografía base
+   ========================================================================== */
+body {
+  font-family: var(--fuente-base);
+  font-size: var(--texto-base);
+  line-height: var(--interlineado-base);
+  background-color: var(--color-fondo);
+  color: var(--color-texto);
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.2;
+  text-wrap: balance;
+}
