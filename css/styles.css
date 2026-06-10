@@ -15,6 +15,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Compensa la altura del header sticky al saltar a un ancla */
+  scroll-padding-top: 4.5rem;
 }
 
 body {
@@ -147,7 +149,7 @@ header {
 
 nav {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   gap: var(--espacio-5);
   max-width: var(--ancho-contenido);
@@ -169,14 +171,73 @@ nav {
   color: var(--color-acento);
 }
 
-/* Móvil: solo logo centrado; los enlaces aparecen en ≥768px */
+/* Botón hamburguesa (solo móvil) */
+.menu-boton {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.menu-boton span {
+  width: 100%;
+  height: 2px;
+  border-radius: 1px;
+  background-color: var(--color-texto);
+  transition:
+    transform var(--transicion-rapida),
+    opacity var(--transicion-rapida);
+}
+
+/* Animación a X: las líneas exteriores se cruzan, la central desaparece */
+.nav-abierto .menu-boton span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-abierto .menu-boton span:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-abierto .menu-boton span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Móvil: panel desplegable bajo el header */
 nav ul {
-  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  padding: var(--espacio-2) var(--espacio-4) var(--espacio-3);
   list-style: none;
-  gap: var(--espacio-4);
+  background-color: var(--color-fondo);
+  border-bottom: 1px solid var(--color-borde);
+  opacity: 0;
+  transform: translateY(-8px);
+  visibility: hidden;
+  transition:
+    opacity var(--transicion-rapida),
+    transform var(--transicion-rapida),
+    visibility var(--transicion-rapida);
+}
+
+.nav-abierto nav ul {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 nav ul a {
+  display: block;
+  padding-block: var(--espacio-2);
   text-decoration: none;
   font-size: 0.9375rem;
   font-weight: 600;
@@ -185,6 +246,11 @@ nav ul a {
 }
 
 nav ul a:hover {
+  color: var(--color-acento);
+}
+
+/* Enlace de la sección visible (lo gestiona IntersectionObserver en JS) */
+nav ul a.activo {
   color: var(--color-acento);
 }
 
@@ -584,12 +650,26 @@ tbody tr:hover {
 /* ≥768px: enlaces del nav visibles y más aire en el hero
    ========================================================================== */
 @media (min-width: 768px) {
-  nav {
-    justify-content: space-between;
+  .menu-boton {
+    display: none;
   }
 
+  /* El panel móvil vuelve a ser una fila estática de enlaces */
   nav ul {
-    display: flex;
+    position: static;
+    flex-direction: row;
+    gap: var(--espacio-4);
+    padding: 0;
+    background: none;
+    border: 0;
+    opacity: 1;
+    transform: none;
+    visibility: visible;
+    transition: none;
+  }
+
+  nav ul a {
+    padding-block: 0;
   }
 
   .hero {
