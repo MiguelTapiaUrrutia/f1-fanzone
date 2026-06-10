@@ -258,9 +258,10 @@ nav a:focus-visible {
   outline-offset: 4px;
 }
 
-/* Sección Campeonato
+/* Secciones de contenido
    ========================================================================== */
-#campeonato {
+#campeonato,
+#calendario {
   max-width: var(--ancho-contenido);
   margin-inline: auto;
   padding: var(--espacio-6) var(--espacio-4);
@@ -274,6 +275,8 @@ nav a:focus-visible {
 
 .tablas-campeonato {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  align-items: start;
   gap: var(--espacio-4);
   margin-top: var(--espacio-5);
 }
@@ -354,6 +357,87 @@ tbody tr:hover {
   color: var(--color-texto-secundario);
 }
 
+/* Sección Calendario
+   ========================================================================== */
+.grid-calendario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--espacio-4);
+  margin-top: var(--espacio-5);
+}
+
+.carrera {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+  transition:
+    border-color var(--transicion-rapida),
+    transform var(--transicion-rapida);
+}
+
+.carrera:hover {
+  border-color: var(--color-acento);
+  transform: translateY(-2px);
+}
+
+.carrera.proxima {
+  border-color: var(--color-acento);
+}
+
+.carrera-cabecera {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.carrera-ronda {
+  font-family: var(--fuente-mono);
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--color-acento);
+  line-height: 1;
+}
+
+.carrera h3 {
+  font-size: 1.25rem;
+}
+
+.carrera-circuito {
+  font-size: 0.9375rem;
+  color: var(--color-texto-secundario);
+}
+
+.carrera-fechas {
+  margin-top: auto;
+  font-size: 0.9375rem;
+}
+
+/* Badges
+   ========================================================================== */
+.badge {
+  padding: var(--espacio-1) var(--espacio-2);
+  font-family: var(--fuente-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: var(--radio-s);
+}
+
+.badge-proxima {
+  background-color: var(--color-acento);
+  color: var(--color-fondo);
+}
+
+.badge-sprint {
+  color: var(--color-texto-secundario);
+  border: 1px solid var(--color-borde);
+}
+
 /* ≥768px: enlaces del nav visibles y más aire en el hero
    ========================================================================== */
 @media (min-width: 768px) {
@@ -368,14 +452,5 @@ tbody tr:hover {
   .hero {
     gap: var(--espacio-5);
     padding-block: var(--espacio-7);
-  }
-}
-
-/* ≥900px: tablas del campeonato lado a lado
-   ========================================================================== */
-@media (min-width: 900px) {
-  .tablas-campeonato {
-    grid-template-columns: 1fr 1fr;
-    align-items: start;
   }
 }
