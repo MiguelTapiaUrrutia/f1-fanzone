@@ -647,6 +647,273 @@ tbody tr:hover {
   color: var(--color-texto-secundario);
 }
 
+/* Página Buscador
+   ========================================================================== */
+.buscador {
+  max-width: var(--ancho-contenido);
+  margin-inline: auto;
+  padding: var(--espacio-6) var(--espacio-4);
+}
+
+.buscador h1 {
+  font-size: clamp(1.75rem, 1.4rem + 1.8vw, 2.5rem);
+  text-transform: uppercase;
+}
+
+/* Formulario de búsqueda */
+#form-buscador {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: var(--espacio-3);
+  max-width: 36rem;
+  margin-top: var(--espacio-5);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-m);
+}
+
+#form-buscador label[for='termino'] {
+  font-weight: 600;
+}
+
+#termino {
+  width: 100%;
+  padding: var(--espacio-2) var(--espacio-3);
+  color: var(--color-texto);
+  background-color: var(--color-fondo);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  transition: border-color var(--transicion-rapida);
+}
+
+#termino:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+  border-color: var(--color-acento);
+}
+
+#form-buscador fieldset {
+  border: 0;
+}
+
+#form-buscador legend {
+  margin-bottom: var(--espacio-1);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--color-texto-secundario);
+}
+
+#form-buscador input[type='radio'] {
+  accent-color: var(--color-acento);
+  cursor: pointer;
+}
+
+#form-buscador fieldset label {
+  margin-right: var(--espacio-3);
+  cursor: pointer;
+}
+
+#form-buscador button[type='submit'] {
+  padding: var(--espacio-2) var(--espacio-5);
+  font-family: var(--fuente-titulos);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--color-fondo);
+  background-color: var(--color-acento);
+  border: 0;
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  transition:
+    background-color var(--transicion-rapida),
+    opacity var(--transicion-rapida);
+}
+
+#form-buscador button[type='submit']:hover:not(:disabled) {
+  background-color: var(--color-acento-tenue);
+}
+
+#form-buscador button[type='submit']:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+#form-buscador button[type='submit']:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 3px;
+}
+
+/* Zona de estado: loading, sin resultado, errores */
+#estado {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+  color: var(--color-texto-secundario);
+}
+
+#estado:empty {
+  display: none;
+}
+
+/* Ejemplos clickeables dentro del mensaje "sin resultado" */
+.ejemplo {
+  padding: 2px var(--espacio-2);
+  font-family: var(--fuente-mono);
+  font-size: 0.8125rem;
+  color: var(--color-acento);
+  background: none;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  transition:
+    border-color var(--transicion-rapida),
+    background-color var(--transicion-rapida);
+}
+
+.ejemplo:hover,
+.ejemplo:focus-visible {
+  border-color: var(--color-acento);
+  background-color: rgba(0, 229, 176, 0.08);
+}
+
+.reintentar {
+  padding: var(--espacio-1) var(--espacio-3);
+  font-weight: 600;
+  color: var(--color-texto);
+  background: none;
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  transition: border-color var(--transicion-rapida);
+}
+
+.reintentar:hover,
+.reintentar:focus-visible {
+  border-color: var(--color-acento);
+  color: var(--color-acento);
+}
+
+/* Ficha del resultado principal */
+.ficha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-3);
+  max-width: 36rem;
+  margin-top: var(--espacio-5);
+  padding: var(--espacio-4);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-left: 3px solid var(--color-acento);
+  border-radius: var(--radio-m);
+}
+
+.ficha-cabecera {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.ficha h2 {
+  font-size: 1.5rem;
+  margin-right: var(--espacio-2);
+}
+
+.badge-dato {
+  color: var(--color-acento);
+  border: 1px solid var(--color-borde);
+}
+
+.ficha-datos {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--espacio-1) var(--espacio-3);
+}
+
+.ficha-datos dt {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: var(--interlineado-base);
+  color: var(--color-texto-secundario);
+}
+
+/* Selector de candidatos cuando hay varias coincidencias */
+#resultado-principal > h2 {
+  margin-top: var(--espacio-5);
+  font-size: 1.25rem;
+}
+
+/* Relacionados: chips clickeables de búsqueda cruzada */
+#resultado-relacionados {
+  margin-top: var(--espacio-5);
+}
+
+#resultado-relacionados h2 {
+  font-size: 1.25rem;
+}
+
+.conteo {
+  margin-top: var(--espacio-1);
+  font-size: 0.9375rem;
+  color: var(--color-texto-secundario);
+}
+
+/* auto-fill (no auto-fit): con pocos chips conserva columnas compactas
+   en vez de estirar dos chips a todo el ancho */
+.grid-chips {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-3);
+  list-style: none;
+}
+
+.chip {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  padding: var(--espacio-2) var(--espacio-3);
+  text-align: left;
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  transition:
+    border-color var(--transicion-rapida),
+    transform var(--transicion-rapida);
+}
+
+.chip:hover,
+.chip:focus-visible {
+  border-color: var(--color-acento);
+  transform: translateY(-2px);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+.chip-nombre {
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.chip-nacionalidad {
+  font-size: 0.8125rem;
+  color: var(--color-texto-secundario);
+}
+
 /* ≥768px: enlaces del nav visibles y más aire en el hero
    ========================================================================== */
 @media (min-width: 768px) {

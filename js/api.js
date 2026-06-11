@@ -69,7 +69,65 @@ async function obtenerListaCompleta(construirRuta, extraerLista) {
   return elementos;
 }
 
+// --- Índices completos con caché persistente --------------------------------
+// Los listados completos (~860 pilotos, ~210 equipos) cambian muy poco:
+// se guardan en localStorage con marca de tiempo y se reutilizan 30 días.
+
+const CLAVE_INDICE_PILOTOS = 'f1fanzone-indice-pilotos';
+const CLAVE_INDICE_EQUIPOS = 'f1fanzone-indice-equipos';
+const VIGENCIA_INDICE_MS = 30 * 24 * 60 * 60 * 1000; // 30 días
+
+function leerIndiceLocal(clave) {
+  try {
+    const crudo = localStorage.getItem(clave);
+    if (!crudo) {
+      return null;
+    }
+
+    const { timestamp, datos } = JSON.parse(crudo);
+    const estaVencido = Date.now() - timestamp > VIGENCIA_INDICE_MS;
+    if (estaVencido || !Array.isArray(datos)) {
+      return null;
+    }
+    return datos;
+  } catch {
+    // JSON corrupto o localStorage inaccesible: como si no hubiera caché
+    return null;
+  }
+}
+
+function guardarIndiceLocal(clave, datos) {
+  try {
+    localStorage.setItem(clave, JSON.stringify({ timestamp: Date.now(), datos }));
+  } catch {
+    // localStorage lleno o bloqueado: la app funciona igual, solo que la
+    // próxima sesión volverá a descargar el índice
+  }
+}
+
+async function obtenerIndice(clave, recurso, extraerLista) {
+  const guardado = leerIndiceLocal(clave);
+  if (guardado) {
+    return guardado;
+  }
+
+  const datos = await obtenerListaCompleta(
+    (offset) => `${recurso}?limit=${LIMITE_POR_PAGINA}&offset=${offset}`,
+    extraerLista,
+  );
+  guardarIndiceLocal(clave, datos);
+  return datos;
+}
+
 // --- API pública -----------------------------------------------------------
+
+export function obtenerTodosLosPilotos() {
+  return obtenerIndice(CLAVE_INDICE_PILOTOS, '/drivers.json', (mrData) => mrData.DriverTable.Drivers);
+}
+
+export function obtenerTodosLosEquipos() {
+  return obtenerIndice(CLAVE_INDICE_EQUIPOS, '/constructors.json', (mrData) => mrData.ConstructorTable.Constructors);
+}
 
 export async function obtenerPiloto(driverId) {
   const id = encodeURIComponent(driverId);
