@@ -50,6 +50,16 @@
     <div id="estado" aria-live="polite"></div>
     <div id="resultado-principal"></div>
     <div id="resultado-relacionados"></div>
+
+    <section id="historicos" aria-labelledby="historicos-titulo">
+      <h2 id="historicos-titulo">Campeonatos por temporada</h2>
+      <div class="control-temporada">
+        <label for="selector-anio">Temporada</label>
+        <select id="selector-anio"></select>
+      </div>
+      <div id="estado-historico" aria-live="polite"></div>
+      <div id="tabla-historico"></div>
+    </section>
   </main>
 
   <footer>
@@ -58,5 +68,6 @@
 
   <script src="js/app.js"></script>
   <script type="module" src="js/buscador.js"></script>
+  <script type="module" src="js/historicos.js"></script>
 </body>
 </html>

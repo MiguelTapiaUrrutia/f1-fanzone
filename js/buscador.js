@@ -11,6 +11,7 @@ import {
   obtenerTodosLosPilotos,
   obtenerTodosLosEquipos,
 } from './api.js';
+import { crear } from './dom.js';
 
 const formulario = document.querySelector('#form-buscador');
 const campoTermino = document.querySelector('#termino');
@@ -40,17 +41,6 @@ function normalizarTexto(texto) {
     .toLowerCase()
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '');
-}
-
-function crear(etiqueta, clase, texto) {
-  const elemento = document.createElement(etiqueta);
-  if (clase) {
-    elemento.className = clase;
-  }
-  if (texto !== undefined) {
-    elemento.textContent = texto;
-  }
-  return elemento;
 }
 
 // Parseo por partes: new Date("AAAA-MM-DD") interpreta la fecha como UTC

@@ -914,6 +914,67 @@ tbody tr:hover {
   color: var(--color-texto-secundario);
 }
 
+/* Sección históricos por temporada (la tabla reutiliza .tabla-wrapper,
+   table, caption, .lider y .num definidos para el campeonato del index) */
+#historicos {
+  margin-top: var(--espacio-7);
+}
+
+.control-temporada {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-4);
+}
+
+.control-temporada label {
+  font-weight: 600;
+}
+
+#selector-anio {
+  padding: var(--espacio-1) var(--espacio-2);
+  font-family: var(--fuente-mono);
+  color: var(--color-texto);
+  background-color: var(--color-superficie);
+  border: 1px solid var(--color-borde);
+  border-radius: var(--radio-s);
+  cursor: pointer;
+  transition: border-color var(--transicion-rapida);
+}
+
+#selector-anio:hover:not(:disabled) {
+  border-color: var(--color-acento);
+}
+
+#selector-anio:focus-visible {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+}
+
+#selector-anio:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+#estado-historico {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--espacio-2);
+  margin-top: var(--espacio-3);
+  color: var(--color-texto-secundario);
+}
+
+#estado-historico:empty {
+  display: none;
+}
+
+/* Ancho acotado: cinco columnas se leen mejor que estiradas a 72rem */
+#tabla-historico .tabla-wrapper {
+  max-width: 48rem;
+  margin-top: var(--espacio-3);
+}
+
 /* ≥768px: enlaces del nav visibles y más aire en el hero
    ========================================================================== */
 @media (min-width: 768px) {
